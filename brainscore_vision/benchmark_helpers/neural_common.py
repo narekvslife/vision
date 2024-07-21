@@ -28,8 +28,11 @@ class NeuralBenchmark(BenchmarkBase):
         if 'time_bin' in source_assembly.dims and source_assembly.sizes['time_bin'] == 1:
             source_assembly = source_assembly.squeeze('time_bin')  # static case for these benchmarks
         raw_score = self._similarity_metric(source_assembly, self._assembly)
-        ceiled_score = explained_variance(raw_score, self.ceiling)
-        return ceiled_score
+        if self.ceiling:
+            ceiled_score = explained_variance(raw_score, self.ceiling)
+            return ceiled_score
+        else:
+            return raw_score
 
 
 def timebins_from_assembly(assembly):

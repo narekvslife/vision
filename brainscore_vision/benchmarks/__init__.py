@@ -110,7 +110,10 @@ class BenchmarkBase(Benchmark):
 
     @store()
     def _ceiling(self, identifier):
-        return self._ceiling_func()
+        if self._ceiling_func:
+            return self._ceiling_func()
+        else:
+            return None
 
 
 def ceil_score(score: Score, ceiling: Score) -> Score:
